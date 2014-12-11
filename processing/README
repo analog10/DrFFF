@@ -1,0 +1,2 @@
+gen_plot_data: Run this script inside a directory containing your collected ambient.txt mm_bed_temp.txt and raw_bed_temp.txt to generate the plot_*.txt files
+plot.py: Run this python script inside the same directory to show your graph plot

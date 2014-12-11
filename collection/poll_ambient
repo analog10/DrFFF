@@ -1,0 +1,3 @@
+#!/bin/bash
+
+while true; do ./i2c /dev/i2c-2 2>/dev/null; sleep 0.50; done

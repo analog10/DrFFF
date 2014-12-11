@@ -1,0 +1,10 @@
+Compile utilities either on the collection device (ie Raspberry Pi, Beaglebone) or use a cross compiler
+
+See the scripts for the collection parameters
+To initiate collection run
+
+	# Start the logging process
+	./log_all &
+
+	# Kickoff the temperature change
+	./temp_setter

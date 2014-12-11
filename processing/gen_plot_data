@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cat raw_bed_temp.txt | grep RAW1 | sed -e 's/RAW1://g' > plot_raw_adc.txt
+cat raw_bed_temp.txt | grep TargetBed | sed -e 's/TargetBed://g' > plot_target_bed.txt
+
+cut -d ' ' -f 1,2 < ambient.txt > plot_amb_temp.txt
+cut -d ' ' -f 1,3 < ambient.txt > plot_amb_rh.txt

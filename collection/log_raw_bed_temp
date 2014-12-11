@@ -1,0 +1,10 @@
+#!/bin/sh
+
+stty -F /dev/ttyACM0 icanon 230400
+
+while true; do
+cat /dev/ttyACM0 \
+	| grep --line-buffered -v "wait\|ok" \
+	| stdbuf -oL cut -d ' ' -f 5 \
+	| while read line; do echo "$(date +%s.%N) $line"; done
+done

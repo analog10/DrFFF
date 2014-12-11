@@ -1,0 +1,13 @@
+DrFFF is a utility for calibrating the thermistors in your FFF 3D printer.
+The functionality is partitioned into two subsystems:
+1) The data collection subsystem
+ -Runs on the BeagleBone or Raspberry PI
+ -Reads enclosure temperature and humidity via Si7020 sensor (acquired from here https://www.tindie.com/products/ImpGuru/si7020-temperature-and-humidity-breakout)
+ -Presently only supports TP4000ZC RS232 multimeter for capturing thermocouple or other readings
+ -Interrogates the 3D printer via GCODE (just uses simple bash scripts) to read raw ADC values
+ -Produces UTC timestamped text files to be processed by the next subsystem
+
+2) The data processing subsystem
+ -Produces a plot of the data showing temperatures, humidity and raw ADC values
+
+In the future I want to add support for bed leveling using the following technique http://hackaday.io/project/511-digital-dial-indicator-cnc-surface-probe

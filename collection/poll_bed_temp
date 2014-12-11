@@ -1,0 +1,4 @@
+#!/bin/sh
+MULTIMETER_PORT=/dev/ttyO5
+
+stdbuf -oL ./multimeter ${MULTIMETER_PORT} | stdbuf -oL cut -d ' ' -f 1,2

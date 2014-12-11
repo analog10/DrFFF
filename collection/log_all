@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./poll_ambient > ambient.txt &
+./poll_bed_temp > mm_bed_temp.txt &
+./log_raw_bed_temp > raw_bed_temp.txt

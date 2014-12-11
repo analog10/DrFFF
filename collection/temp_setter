@@ -1,0 +1,50 @@
+#!/bin/bash
+
+PRINTER_PORT=/dev/ttyACM0
+
+# set initial conditions here
+initial_wait=10
+setpoint=30
+max_temp=120
+cool_time=2400
+
+# increment setpoint by 3C each time
+increment=3
+# wait interval/4 seconds, so 90 in this case
+interval=360
+
+# beep on each temperature set
+fparam_beep=1
+
+>&2 echo SETTING setpoint ${setpoint} for ${initial_wait}
+# set and initial wait
+echo "M140 S${setpoint} F1" > ${PRINTER_PORT}
+sleep ${initial_wait}
+>&2 echo Proceeding
+
+#Linear ramp up
+while ((${setpoint} < ${max_temp})) ; do
+	i=0;
+	while ((${i} < ${interval})) ; do
+		i=$((i + 1))
+		echo "M105 X0" > ${PRINTER_PORT}
+		sleep 0.25
+	done
+	>&2 echo SETTING ${setpoint}
+	setpoint=$((setpoint + increment))
+	echo "M140 S${setpoint} F${fparam_beep}" > ${PRINTER_PORT}
+done
+
+#Cooldown
+echo "M140 S0 F${fparam_beep}" > ${PRINTER_PORT}
+
+cool_count=0
+while ((${cool_count} < ${cool_time})) ; do
+	i=0;
+	while ((${i} < ${interval})) ; do
+		i=$((i + 1))
+		echo "M105 X0" > ${PRINTER_PORT}
+		sleep 0.25
+	done
+	cool_count=$((cool_count + 1))
+done
