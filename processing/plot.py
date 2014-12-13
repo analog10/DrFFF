@@ -15,6 +15,13 @@ def make_format(current, other):
 		return ('C: {:<40}    ADC: {:<}'.format(*['({:.3f}, {:.3f})'.format(x, y) for x,y in coords]))
 	return format_coord
 
+def on_pick(event):
+	thisline = event.artist
+	xdata, ydata = thisline.get_data()
+	ind = event.ind
+	print(ydata[ind[0]])
+	#print('on pick line:', zip(xdata[ind], ydata[ind]))
+
 with open("plot_target_bed.txt") as f:
 	target_data = f.read()
 target_data = target_data.rstrip("\n").split("\n")
@@ -58,15 +65,20 @@ ax1.plot(rh_x,rh_y, c='c', label="Enclosure")
 
 ax2 = ax1.twinx()
 ax2.set_ylabel("C")
-ax2.plot(tx,ty, c='b', label="Target")
-ax2.plot(mx,my, c='r', label="Bed Measured")
+ax2.plot(tx,ty, 'bo', label="Target")
 ax2.plot(at_x,at_y, c='y', label="Enclosure")
+
+ax2.plot(mx,my, c='r', label="Bed Measured", picker=5)
 leg2 = ax2.legend()
 
 ax3 = ax2.twinx()
 ax3.set_ylabel("ADC")
-ax3.plot(adc_x,adc_y, c='g', label="Bed ADC")
+ax3.plot(adc_x,adc_y, c='g', label="Bed ADC", picker=5)
 #leg2 = ax2.legend()
 
-ax3.format_coord = make_format(ax3, ax2)
+#ax2.set_zorder(0.1) 
+
+fig.canvas.mpl_connect("pick_event", on_pick)
+
+#ax2.format_coord = make_format(ax3, ax2)
 plt.show()
